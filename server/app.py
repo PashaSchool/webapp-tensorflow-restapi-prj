@@ -2,37 +2,23 @@ from models.image import Image
 from database.database import Database
 from flask import Flask, render_template, request, send_file, make_response
 import codecs
-
-
-# from bson import Regex
-
-
-# import io
-# import cv2
-# import numpy as np
-
-# _______________________________________________
 import tensorflow as tf
-from datetime import datetime
-
-import io
-from io import StringIO
-import cv2
-
 import numpy as np
-import os
-# import matplotlib.pyplot as plt
+
 
 DIR = 'convolution/saved_model/'
-LABELS_ = ["Airplane", "Automobile", "Bird", "Cat", "Deer",
-"Dog", "Frog","Hourse", "Ship", "Truck"]
+LABELS_ = ["Airplane",
+        "Automobile",
+        "Bird",
+        "Cat",
+        "Deer",
+        "Dog",
+        "Frog",
+        "Hourse",
+        "Ship",
+        "Truck"]
 
-import cv2
-import io
-
-
-
-app = Flask(__name__)
+app = Flask(__name__, template_folder="../static")
 
 app.config['MONGO_DBNAME'] = 'gallery_instagram'
 app.config['MONGO_URI'] = 'mongodb://pavlo_kuzina:silverok911@ds141406.mlab.com:41406/gallery_instagram'
@@ -44,7 +30,7 @@ def initiliae_database():
 
 @app.route("/")
 def index(images=[]):
-    return render_template("index.html", images=[])
+    return render_template("index.html", images=images)
 
 @app.route('/get_all_images')
 def get_image():
@@ -89,12 +75,10 @@ def upload_image():
         label_idx = np.argmax(pred[0])
         label = LABELS_[label_idx]
         print("THE PREDICTION IS LOOK LIKE THIS: {}".format(label))
-
     Image.save_to_mongo(img_file, content_type, filename, label )
-
 
     return index(images=[])
     
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5005)
+    app.run(debug=True)
