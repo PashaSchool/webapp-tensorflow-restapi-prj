@@ -7,7 +7,7 @@ import numpy as np
 import os
 
 
-DIR = 'cnn_saved_model/saved_model/'
+DIR = 'server/cnn_saved_model/saved_model/'
 LABELS_ = ["Airplane",
         "Automobile",
         "Bird",
