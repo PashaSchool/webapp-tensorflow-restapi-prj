@@ -52,6 +52,9 @@ def upload_image():
     content_type = img_file.content_type
     filename = img_file.filename
 
+    label = "ok"
+    Image.save_to_mongo(img_file, content_type, filename, label )
+
     image = tf.image.decode_jpeg(img_file.read(), channels=3)
     image = tf.image.resize_images(image,[ 32, 32])
     
@@ -73,10 +76,8 @@ def upload_image():
         pred = sess.run(y_predicted, feed_dict={x: reshaped_image , keep_prob: 1.0})
         label_idx = np.argmax(pred[0])
         label = LABELS_[label_idx]
-    # label = "ok"
-    Image.save_to_mongo(request.files['img'], content_type, filename, label )
-
-    return index(images=[])
+    
+    return index(images=[label])
     
 
 if __name__ == '__main__':
