@@ -52,8 +52,8 @@ def upload_image():
     content_type = img_file.content_type
     filename = img_file.filename
 
-    label = "ok"
-    Image.save_to_mongo(img_file, content_type, filename, label )
+    ok = "ok"
+    Image.save_to_mongo(img_file, content_type, filename, label=ok )
 
     image = tf.image.decode_jpeg(img_file.read(), channels=3)
     image = tf.image.resize_images(image,[ 32, 32])
@@ -77,7 +77,7 @@ def upload_image():
         label_idx = np.argmax(pred[0])
         label = LABELS_[label_idx]
     
-    return index(images=[label])
+    return index(images=label)
     
 
 if __name__ == '__main__':
