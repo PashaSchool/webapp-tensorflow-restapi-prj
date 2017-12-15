@@ -4,9 +4,10 @@ from flask import Flask, render_template, request, send_file, make_response
 import codecs
 import tensorflow as tf
 import numpy as np
+import os
 
 
-DIR = 'convolution/saved_model/'
+DIR = 'cnn_saved_model/saved_model/'
 LABELS_ = ["Airplane",
         "Automobile",
         "Bird",
