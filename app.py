@@ -48,6 +48,7 @@ def get_image():
 @app.route("/upload", methods=["POST"])
 def upload_image():
     img_file = request.files['img']
+    t = img_file
 
     content_type = img_file.content_type
     filename = img_file.filename
@@ -75,7 +76,7 @@ def upload_image():
         label_idx = np.argmax(pred[0])
         label = LABELS_[label_idx]
 
-    Image.save_to_mongo(img_file, content_type, filename, label )
+    Image.save_to_mongo(t, content_type, filename, label )
 
     return index(images=[])
     
