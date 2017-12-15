@@ -1,6 +1,6 @@
 from server.models.image import Image
 from server.database.database import Database
-from flask import Flask, render_template, request, send_file, make_response
+from flask import Flask, render_template, request, send_file, make_response, session
 import codecs
 import tensorflow as tf
 import numpy as np
@@ -22,6 +22,7 @@ LABELS_ = ["Airplane",
 app = Flask(__name__, template_folder="static")
 
 app.config['MONGO_DBNAME'] = 'gallery_instagram'
+app.secret_key = "uuuuuu"
 app.config['MONGO_URI'] = 'mongodb://pavlo_kuzina:silverok911@ds141406.mlab.com:41406/gallery_instagram'
 
 @app.before_first_request 
@@ -49,13 +50,17 @@ def get_image():
 def upload_image():
     img_file = request.files['img']
 
+
     content_type = img_file.content_type
     filename = img_file.filename
 
-    ok = "ok"
-    Image.save_to_mongo(img_file, content_type, filename, label=ok )
+    Image.save_to_mongo(img_file, content_type, filename, label='' )
 
-    image = tf.image.decode_jpeg(img_file.read(), channels=3)
+    pic = Database.get_all('images')
+    cur_id = pic[0]['_id']
+    picture = Database.FS.get(pic[0]["fields"])
+
+    image = tf.image.decode_jpeg(picture.read(), channels=3)
     image = tf.image.resize_images(image,[ 32, 32])
     
     with tf.Session() as sess:
@@ -74,11 +79,15 @@ def upload_image():
         keep_prob =  tf.get_collection('keep_prob')[0]
 
         pred = sess.run(y_predicted, feed_dict={x: reshaped_image , keep_prob: 1.0})
+        sess.close()
         label_idx = np.argmax(pred[0])
         label = LABELS_[label_idx]
+    ### AFTER PREDICTION WE CAN FETCH THIS SINGLE IMAGE FOM IMAGES COLLECTION AND ADD LABEL
     
     return index(images=label)
     
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
