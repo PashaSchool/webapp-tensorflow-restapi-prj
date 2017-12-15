@@ -1,8 +1,8 @@
-from models.image import Image
-from database.database import Database
+from server.models.image import Image
+from server.database.database import Database
 from flask import Flask, render_template, request, send_file, make_response
 import codecs
-import tensorflow as tf
+# import tensorflow as tf
 import numpy as np
 import os
 
@@ -19,7 +19,7 @@ LABELS_ = ["Airplane",
         "Ship",
         "Truck"]
 
-app = Flask(__name__, template_folder="../static")
+app = Flask(__name__, template_folder="static")
 
 app.config['MONGO_DBNAME'] = 'gallery_instagram'
 app.config['MONGO_URI'] = 'mongodb://pavlo_kuzina:silverok911@ds141406.mlab.com:41406/gallery_instagram'

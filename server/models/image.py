@@ -1,4 +1,4 @@
-from database.database import Database
+from server.database.database import Database
 import uuid
 
 class Image(object):
