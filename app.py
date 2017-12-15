@@ -52,29 +52,29 @@ def upload_image():
     content_type = img_file.content_type
     filename = img_file.filename
 
-    # image = tf.image.decode_jpeg(img_file.read(), channels=3)
-    # image = tf.image.resize_images(image,[ 32, 32])
+    image = tf.image.decode_jpeg(img_file.read(), channels=3)
+    image = tf.image.resize_images(image,[ 32, 32])
     
-    # with tf.Session() as sess:
-    #     sess.run(tf.global_variables_initializer())
-    #     tf.get_default_graph().as_graph_def()
+    with tf.Session() as sess:
+        sess.run(tf.global_variables_initializer())
+        tf.get_default_graph().as_graph_def()
 
-    #     image_value = sess.run([image])
-    #     reshaped_image = np.reshape(image_value[0], [1, 32, 32, 3]).astype(np.float32)
+        image_value = sess.run([image])
+        reshaped_image = np.reshape(image_value[0], [1, 32, 32, 3]).astype(np.float32)
 
-    #     saver = tf.train.import_meta_graph(os.path.join(DIR,'model-ckpt-4900.meta'))
-    #     saver.restore(sess, os.path.join(DIR,"model-ckpt-4900"))
+        saver = tf.train.import_meta_graph(os.path.join(DIR,'model-ckpt-4900.meta'))
+        saver.restore(sess, os.path.join(DIR,"model-ckpt-4900"))
 
-    #     x = tf.get_collection('training_data_input')[0]
-    #     y_true = tf.get_collection('training_data_outpuy')[0]
-    #     y_predicted = tf.get_collection('prediction')[0]
-    #     keep_prob =  tf.get_collection('keep_prob')[0]
+        x = tf.get_collection('training_data_input')[0]
+        y_true = tf.get_collection('training_data_outpuy')[0]
+        y_predicted = tf.get_collection('prediction')[0]
+        keep_prob =  tf.get_collection('keep_prob')[0]
 
-    #     pred = sess.run(y_predicted, feed_dict={x: reshaped_image , keep_prob: 1.0})
-    #     label_idx = np.argmax(pred[0])
-    #     label = LABELS_[label_idx]
-    label = "ok"
-    Image.save_to_mongo(img_file, content_type, filename, label )
+        pred = sess.run(y_predicted, feed_dict={x: reshaped_image , keep_prob: 1.0})
+        label_idx = np.argmax(pred[0])
+        label = LABELS_[label_idx]
+    # label = "ok"
+    Image.save_to_mongo(request.files['img'], content_type, filename, label )
 
     return index(images=[])
     

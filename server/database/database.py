@@ -15,6 +15,7 @@ class Database(object):
         data = Database.DATABASE[collection].find({})
         return [d for d in data]
 
+
     @staticmethod
     def insert_image(collection, img, content_type, filename, label):
         fields_id = Database.FS.put(img, content_type=content_type, filename=filename)
