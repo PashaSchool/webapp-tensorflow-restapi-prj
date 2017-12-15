@@ -64,18 +64,17 @@ def upload_image():
 
         saver = tf.train.import_meta_graph(os.path.join(DIR,'model-ckpt-4900.meta'))
         saver.restore(sess, os.path.join(DIR,"model-ckpt-4900"))
-        print("restored")
+
 
         x = tf.get_collection('training_data_input')[0]
         y_true = tf.get_collection('training_data_outpuy')[0]
         y_predicted = tf.get_collection('prediction')[0]
         keep_prob =  tf.get_collection('keep_prob')[0]
-        print("data is saved")
 
         pred = sess.run(y_predicted, feed_dict={x: reshaped_image , keep_prob: 1.0})
         label_idx = np.argmax(pred[0])
         label = LABELS_[label_idx]
-        print("THE PREDICTION IS LOOK LIKE THIS: {}".format(label))
+
     Image.save_to_mongo(img_file, content_type, filename, label )
 
     return index(images=[])
