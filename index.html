@@ -22,7 +22,7 @@
     </form>
 
     <hr>
-    <form action="/get_all_images" mathod='get'> 
+    <form action="/api/get_all_images" mathod='get' id='images'> 
         <label for="show_images">Show all images</label>
         <input type="submit" id='show_images'>
     </form>
@@ -31,8 +31,26 @@
         <img src="data:image/png;base64,{{images}}" alt="">
         <div>{{images}}</div>
     </div>
+    <img src="" alt="" id='img'>
     <div id="app"></div>
     <script src="{{ url_for('static', filename='bundle.js') }}"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.js"
+    integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+    crossorigin="anonymous"></script>
+    <script>
+        $(function(){
+            $("#images").on('submit', function(e) {
+                e.preventDefault()
+                $.get('/api/get_all_images', function(data) {
+                    console.log(data)
+                    // var image = JSON.parse(data.url)
+                    // $("#img").attr("src", image)
+                })
+            })
+        })
+        
+    </script>
     <!-- <script src="./static/bundle.js"></script> -->
 
 </body>

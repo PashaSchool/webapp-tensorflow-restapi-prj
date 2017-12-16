@@ -1,10 +1,11 @@
 from server.models.image import Image
 from server.database.database import Database
-from flask import Flask, render_template, request, send_file, make_response, session
+from flask import Flask, render_template, request, json, jsonify
 import codecs
 import tensorflow as tf
 import numpy as np
 import os
+
 
 
 DIR = 'server/cnn_saved_model/saved_model/'
@@ -32,32 +33,44 @@ def initiliae_database():
 
 @app.route("/")
 def index(images=[]):
+    testData = "here is the important message"
+    dicData = {"message" : testData}
+    jsonStr = json.dumps(dicData)
     return render_template("index.html", images=images)
 
-@app.route('/get_all_images')
-def get_image():
-    img = Database.get_all('images')
-    image = Database.FS.get(img[0]["fields"])
-    
-    base64_data = codecs.encode(image.read(), 'base64')
-    image = base64_data.decode('utf-8')
 
-    return index(images=image)
+@app.route('/api/get_all_images')
+def get_image():
+    images = Database.get_all('images')
+    list_images = []
+
+    for img in images:
+        label_file = img['label']
+        fs_file = Database.FS.get(img["fields"])
+
+        base64_data = codecs.encode(fs_file.read(), 'base64')
+        image = base64_data.decode('utf-8')
+        img_str = "data:image/png;base64," + image
+        jsonImg = json.dumps(img_str)
+
+        list_images.append({"url":jsonImg, "label": label_file})
+
+    return jsonify(images = list_images)
     
 
 @app.route("/upload", methods=["POST"])
 def upload_image():
     img_file = request.files['img']
-
-
     content_type = img_file.content_type
     filename = img_file.filename
 
-    Image.save_to_mongo(img_file, content_type, filename, label='' )
-
-    pic = Database.get_all('images')
-    cur_id = pic[0]['_id']
-    picture = Database.FS.get(pic[0]["fields"])
+    current_image_id = Image.save_to_mongo(img_file, content_type, filename, label='' )
+    
+    # pic = Database.get_all('images')
+    # cur_id = pic[0]['_id']
+    # Image.find_image(current_image_id)
+    picture = Database.FS.get(current_image_id)
+    saved_image = Image.find_image(current_image_id)
 
     image = tf.image.decode_jpeg(picture.read(), channels=3)
     image = tf.image.resize_images(image,[ 32, 32])
@@ -82,11 +95,9 @@ def upload_image():
         label_idx = np.argmax(pred[0])
         label = LABELS_[label_idx]
     ### AFTER PREDICTION WE CAN FETCH THIS SINGLE IMAGE FOM IMAGES COLLECTION AND ADD LABEL
-    
+    saved_image.set_label(label)
     return index(images=label)
     
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
