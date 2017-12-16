@@ -1,16 +1,26 @@
 const path = require('path');
+const webpack = require('webpack');
+
+const BUILD_DIR = path.resolve(__dirname, 'src');
+const APP_DIR = path.resolve(__dirname, 'static');
 
 module.exports = {
-    entry: "./static/app.js",
+    entry: BUILD_DIR + "/app.js",
     output: {
-        path: path.join(__dirname, 'dist'),
+        path: APP_DIR,
         filename: 'bundle.js'
     },
     module: {
-        rules: [{
-            loade: 'babel-loader',
-            test: /\.js$/,
-            exclude: /node_modules/
-        }]
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/
+            }
+        ]
+    },
+    devServer: {
+        contentBase: __dirname + '/',
+        historyApiFallback: true
     }
 }

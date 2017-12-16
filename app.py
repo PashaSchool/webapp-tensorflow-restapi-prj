@@ -19,11 +19,11 @@ LABELS_ = ["Airplane",
         "Ship",
         "Truck"]
 
-app = Flask(__name__, template_folder="static")
+app = Flask(__name__, template_folder=".")
 
 app.config['MONGO_DBNAME'] = 'gallery_instagram'
-app.secret_key = "uuuuuu"
 app.config['MONGO_URI'] = 'mongodb://pavlo_kuzina:silverok911@ds141406.mlab.com:41406/gallery_instagram'
+app.secret_key = "secretverysecetkeyishere"
 
 @app.before_first_request 
 def initiliae_database():
@@ -37,7 +37,6 @@ def index(images=[]):
 @app.route('/get_all_images')
 def get_image():
     img = Database.get_all('images')
-    # label = img[0]["label"]
     image = Database.FS.get(img[0]["fields"])
     
     base64_data = codecs.encode(image.read(), 'base64')
