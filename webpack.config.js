@@ -21,6 +21,9 @@ module.exports = {
     },
     devServer: {
         contentBase: __dirname + '/',
+        stats: "errors-only",
+        open: true,
+        compress: true,
         historyApiFallback: true
     }
 }
