@@ -2,7 +2,7 @@ from server.models.image import Image
 from server.database.database import Database
 from flask import Flask, render_template, request, json, jsonify
 import codecs
-import tensorflow as tf
+# import tensorflow as tf
 import numpy as np
 import os
 
@@ -33,14 +33,11 @@ def initiliae_database():
 
 @app.route("/")
 def index(images=[]):
-    testData = "here is the important message"
-    dicData = {"message" : testData}
-    jsonStr = json.dumps(dicData)
     return render_template("index.html", images=images)
 
 
-@app.route('/api/get_all_images')
-def get_image():
+@app.route("/api/get_images")
+def get_by_label():
     images = Database.get_all('images')
     list_images = []
 
@@ -54,9 +51,15 @@ def get_image():
         jsonImg = json.dumps(img_str)
 
         list_images.append({"url":jsonImg, "label": label_file})
+    return jsonify(images=list_images)
+  
 
-    return jsonify(images = list_images)
-    
+@app.route("/api/get_images/<string:label>")
+def get_images_by_label(label):
+    batch_images = Image.get_by_label(label)
+    # return jsonify(images=batch_images)
+    return json.dumps(batch_images)
+
 
 @app.route("/upload", methods=["POST"])
 def upload_image():
@@ -66,9 +69,6 @@ def upload_image():
 
     current_image_id = Image.save_to_mongo(img_file, content_type, filename, label='' )
     
-    # pic = Database.get_all('images')
-    # cur_id = pic[0]['_id']
-    # Image.find_image(current_image_id)
     picture = Database.FS.get(current_image_id)
     saved_image = Image.find_image(current_image_id)
 
@@ -94,14 +94,12 @@ def upload_image():
         sess.close()
         label_idx = np.argmax(pred[0])
         label = LABELS_[label_idx]
-    ### AFTER PREDICTION WE CAN FETCH THIS SINGLE IMAGE FOM IMAGES COLLECTION AND ADD LABEL
+
     saved_image.set_label(label)
+
     return index(images=label)
 
-@app.route("/api/get_by_label/<labels>", methods=["GET"])
-def get_by_label(labels):
-    batch_images = Image.get_by_label(labels)
-    return jsonify(images=batch_images)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

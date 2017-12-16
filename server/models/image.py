@@ -1,5 +1,7 @@
 from server.database.database import Database
+import codecs
 import uuid
+from flask import json
 
 class Image(object):
     def __init__(self, filename, fields, label='', _id=None):
@@ -31,7 +33,8 @@ class Image(object):
         batch_fields = Database.find_by('images', {"label": label})
         batch_images = []
         for field in batch_fields:
-            fs_file = Database.FS.get(field._id)
+            fs_file = Database.FS.get(field['fields'])
+            label_file = field["label"]
             base64_data = codecs.encode(fs_file.read(), 'base64')
             image = base64_data.decode('utf-8')
             img_str = "data:image/png;base64," + image
