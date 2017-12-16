@@ -38,9 +38,9 @@ class Image(object):
             base64_data = codecs.encode(fs_file.read(), 'base64')
             image = base64_data.decode('utf-8')
             img_str = "data:image/png;base64," + image
-            jsonImg = json.dumps(img_str)
+            # jsonImg = json.dumps(img_str)
 
-            batch_images.append({"url":jsonImg, "label": label_file})
+            batch_images.append({"url": img_str, "label": label_file})
         
         return batch_images
 

@@ -20,7 +20,7 @@ LABELS_ = ["Airplane",
         "Ship",
         "Truck"]
 
-app = Flask(__name__, template_folder=".")
+app = Flask(__name__, template_folder="static/")
 
 app.config['MONGO_DBNAME'] = 'gallery_instagram'
 app.config['MONGO_URI'] = 'mongodb://pavlo_kuzina:silverok911@ds141406.mlab.com:41406/gallery_instagram'

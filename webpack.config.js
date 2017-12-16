@@ -20,7 +20,7 @@ module.exports = {
         ]
     },
     devServer: {
-        contentBase: __dirname + '/',
+        contentBase: path.resolve(__dirname, "static/"),
         stats: "errors-only",
         open: true,
         compress: true,

@@ -972,7 +972,11 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(_Header2.default, null);
+      return _react2.default.createElement(
+        'div',
+        null,
+        ' Awwyeeahhh :D React is here bebe '
+      );
     }
   }]);
 
@@ -18329,7 +18333,7 @@ var Header = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                'HEDAER'
+                'HEDAER !!! '
             );
         }
     }]);
