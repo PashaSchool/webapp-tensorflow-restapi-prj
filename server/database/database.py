@@ -15,6 +15,11 @@ class Database(object):
         result = Database.DATABASE[collection].find({"fields": _id})
         result = [r for r in result]
         return result[0]
+    
+    @staticmethod
+    def find_by(collection, query):
+        result = Database.DATABASE[collection].find(query)
+        return [r for r in result]
 
     @classmethod
     def get_all(cls, collection):

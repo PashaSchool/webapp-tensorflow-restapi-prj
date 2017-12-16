@@ -97,7 +97,11 @@ def upload_image():
     ### AFTER PREDICTION WE CAN FETCH THIS SINGLE IMAGE FOM IMAGES COLLECTION AND ADD LABEL
     saved_image.set_label(label)
     return index(images=label)
-    
+
+@app.route("/api/get_by_label/<labels>", methods=["GET"])
+def get_by_label(labels):
+    batch_images = Image.get_by_label(labels)
+    return jsonify(images=batch_images)
 
 if __name__ == '__main__':
     app.run(debug=True)

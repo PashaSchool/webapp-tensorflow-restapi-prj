@@ -26,5 +26,19 @@ class Image(object):
         self.label = label
         Database.update('images', cursor_id=self._id, updates={"label": label})
 
+    @staticmethod
+    def get_by_label(label):
+        batch_fields = Database.find_by('images', {"label": label})
+        batch_images = []
+        for field in batch_fields:
+            fs_file = Database.FS.get(field._id)
+            base64_data = codecs.encode(fs_file.read(), 'base64')
+            image = base64_data.decode('utf-8')
+            img_str = "data:image/png;base64," + image
+            jsonImg = json.dumps(img_str)
+
+            batch_images.append({"url":jsonImg, "label": label_file})
+        
+        return batch_images
 
     
