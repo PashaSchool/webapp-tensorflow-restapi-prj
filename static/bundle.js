@@ -975,7 +975,7 @@ var App = function (_React$Component) {
       return _react2.default.createElement(
         'div',
         null,
-        ' Awwyeeahhh :D React is here bebe '
+        ' Awwyeeahhh :D React is here bebe ! :D '
       );
     }
   }]);
