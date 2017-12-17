@@ -64,6 +64,7 @@ def get_images_by_label(label):
 @app.route("/upload", methods=["POST"])
 def upload_image():
     img_file = request.files['img']
+    print("The image file is {}".format(img_file))
     content_type = img_file.content_type
     filename = img_file.filename
 
@@ -98,7 +99,6 @@ def upload_image():
     saved_image.set_label(label)
 
     return index(images=label)
-
 
 
 if __name__ == '__main__':

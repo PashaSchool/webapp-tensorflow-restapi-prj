@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 
 const links = [
     "Airplane",
@@ -18,9 +18,9 @@ class Navigation extends Component {
     render() {
         return (
             <nav className='Navigation'>
-                <Link to="/">Add photo</Link>
-                <Link to="/all_photo">All photo</Link>
-                {links.map((link, idx) => <Link key={idx} to={`/${link}`}>{link}</Link>)}
+                <NavLink exact activeClassName="selected" to="/">HOME</NavLink>
+                <NavLink exact activeClassName="selected" to="/add_photo">Add Photo</NavLink>
+                {links.map((link, idx) => <NavLink activeClassName="selected" key={idx} to={`/${link}`}>{link}</NavLink>)}
             </nav>
         )
     }

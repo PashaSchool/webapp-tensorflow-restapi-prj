@@ -1,4 +1,4 @@
-import {SET_HEADER, GET_IMAGES} from '../constant'
+import {SET_HEADER, GET_IMAGES, CLEAR_IMAGES} from '../constant'
 import axios from 'axios'
 
 export const setHeader = (header) => {
@@ -8,6 +8,11 @@ export const setHeader = (header) => {
     }
 }
 
+export const clearImages = () => {
+    return {
+        type: CLEAR_IMAGES
+    }
+}
 
 const reduceImages = (images) => {
     return {
