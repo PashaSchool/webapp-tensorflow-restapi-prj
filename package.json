@@ -18,9 +18,15 @@
   },
   "homepage": "https://github.com/PashaSchool/webapp-tensorflow-restapi-prj#readme",
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-loader": "^7.1.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "webpack": "^3.10.0"
   },
   "devDependencies": {
