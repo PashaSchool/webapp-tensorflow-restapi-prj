@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 
-import {SET_HEADER} from '../constant'
+import {SET_HEADER, GET_IMAGES} from '../constant'
 
 const header = (state = {}, action) => {
     switch(action.type) {
@@ -12,8 +12,19 @@ const header = (state = {}, action) => {
     return state
 }
 
+const images = (state={}, action) => {
+    switch(action.type) {
+        case GET_IMAGES:
+            return [...action.payload]
+        default:
+            return state
+    }
+    return state 
+}
+
 const reducer = combineReducers({
-    header
+    header,
+    images
 })
 
 

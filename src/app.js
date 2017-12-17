@@ -13,7 +13,7 @@ function App() {
         <Wrapper/>
   )
 }
-// const store = createStore(reducer)
+
 const store = createStore(reducer, applyMiddleware(thunk))
 
 render(

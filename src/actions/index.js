@@ -9,15 +9,15 @@ export const setHeader = (header) => {
 }
 
 
-const reduceImages = () => {
+const reduceImages = (images) => {
     return {
-        type: GET_IMAGES
+        type: GET_IMAGES,
+        payload: images.data
     }
 }
 
 export function getImages(label) {
     return (dispatch) => {
-        console.log(label)
         axios.get(`/api/get_images/${label}`).then(response => {
             console.log(response)
             dispatch(reduceImages(response))

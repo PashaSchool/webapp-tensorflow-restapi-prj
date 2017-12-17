@@ -19,6 +19,7 @@ class Navigation extends Component {
         return (
             <nav className='Navigation'>
                 <Link to="/">Add photo</Link>
+                <Link to="/all_photo">All photo</Link>
                 {links.map((link, idx) => <Link key={idx} to={`/${link}`}>{link}</Link>)}
             </nav>
         )
