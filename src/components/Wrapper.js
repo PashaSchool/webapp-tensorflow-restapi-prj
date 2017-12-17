@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {BrowserRouter as Router, Route ,Link, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
 
 import Navigation from './Navigation'
+import Content from './Content'
 
 class Wrapper extends Component {
     render() {
@@ -11,7 +12,8 @@ class Wrapper extends Component {
                     <div>
                         <Navigation/>
                         <Switch>
-                            <Route exact path='/ok' component={() => <div>Work</div>}/>
+                            <Route exact path='/' component={() => <div>Work</div>}/>
+                            <Route path="/:label" component={Content}/>
                         </Switch>
                     </div>
                 </Router>
