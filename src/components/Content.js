@@ -4,10 +4,13 @@ import {setHeader, getImages} from '../actions'
 
 import Header from './Header'
 
-const Image = ({label, url}) => (
-    <div>
-        <h3>{label}</h3>
-        <img src={`${url}`} />
+const Image = ({url}) => (
+    <div className="content-grid">
+        <div className="content-box">
+            <div className='item'>
+                <img src={`${url}`} />
+            </div>
+        </div>
     </div>
 )
 
@@ -26,7 +29,7 @@ const testStyle = function(state) {
 class Content extends React.Component {
     static defaultProps = {
         images: [],
-        header: 'empty'
+        header: 'Home'
     }
     state = {
         isLoaded: false
@@ -87,12 +90,14 @@ class Content extends React.Component {
         console.log("Render")
         const {isLoaded} = this.state;
         return (
-            <div>
-                <div>
+            <div className='Content'>
+                <div className="content-wrapper">
                     <Header header={this.props.header}/>
-                </div>
-                <div>
-                    {this.showImages()}
+                    <div className='container'>
+                        {this.showImages()}
+                    </div>
+
+                    
                 </div>
             </div>
         )

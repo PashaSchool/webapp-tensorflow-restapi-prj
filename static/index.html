@@ -5,43 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
 
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="css/style.css">
     <title>Document</title>
     <style>
-        .Navigation {
-            display: flex;
-            flex-direction: column;
-        }
         .selected {
-            color: orange;
-            font-weight: bolder;
+            background-color: #e91e63;
+            color: #fff;
+            position: relative;
+        }
+
+        .selected:after {
+            content: "";
+            height: 100%;
+            width: 10px;
+            background-color: #e91e63;
+            position: absolute;
+            right: -10px;
+            top: 0;
+        }
+
+        .selected:before {
+            content: "";
+            position: absolute;
+            right: -10px;
+            bottom: -10px;
+            width: 0;
+            height: 0;
+            border-right: 5px solid transparent;
+            border-left: 5px solid #ad1457;
+            border-bottom: 5px solid transparent;
+            border-top: 5px solid #ad1457;
+
         }
     </style>
 </head>
 
 <body>
-    <!-- <h3>That is success bro, trust me</h3> 
-
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="image">Select image</label>
-        <input type="file" name='img' id='image'>
-        <input type="submit" id='upload_img'>
-    </form>
-
-    <hr>
-    <form action="/get_all_images" mathod='get'> 
-        <label for="show_images">Show all images</label>
-        <input type="submit" id='show_images'>
-    </form>
-
-    <div>
-        <img src="data:image/png;base64,{{images}}" alt="">
-        <div>{{images}}</div>
-    </div> -->
     <div id="app"></div>
     <script src="{{ url_for('static', filename='bundle.js') }}"></script>
     <!-- <script src="./static/bundle.js"></script> -->
-    <!-- <script src="./bundle.js"></script> -->
+    <script src="./bundle.js"></script>
 </body>
 
 </html>

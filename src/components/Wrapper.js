@@ -13,7 +13,7 @@ class Wrapper extends Component {
                     <div>
                         <Navigation/>
                         <Switch>
-                            <Route exact path='/' component={() => <div>Work</div>}/>
+                            <Route exact path='/' component={Content}/>
                             <Route path='/add_photo' component={Form}/>
                             <Route path="/:label" component={Content}/>
                         </Switch>

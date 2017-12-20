@@ -2,7 +2,7 @@ from server.models.image import Image
 from server.database.database import Database
 from flask import Flask, render_template, request, json, jsonify
 import codecs
-import tensorflow as tf
+# import tensorflow as tf
 import numpy as np
 import os
 
