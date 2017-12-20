@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import axios from 'axios'
+import {postImage} from '../actions'
+import {connect} from 'react-redux'
 
 function ImageLabel({url, label}) {
     return (
@@ -8,7 +10,7 @@ function ImageLabel({url, label}) {
                 <img className="exist_image" src={url}/>
             </div>
             <div className='label-container'>
-               Label
+               {label}
             </div>
         </div>
     )
@@ -16,18 +18,21 @@ function ImageLabel({url, label}) {
 
 
 class Form extends Component {
+    static defaultProps = {
+        url: '',
+        label: ''
+    }
     changeHandler = (e) => {
         e.preventDefault();
-
+        console.log('submit occur')
         let data = new FormData(this.form[0])
         data.append('img', this.img.files[0])
 
-        axios.post("/upload", data)
-            .then(res => console.log("success", res))
-            .catch(e => console.log("error", e))
-            console.log(data)
+        this.props.postImage(data)
     }
+
     render() {
+        console.log(this.props)
         return (
             <div className='Content'>
                 <div className="content-wrapper">
@@ -41,7 +46,7 @@ class Form extends Component {
                                 <button>Load current image</button>
                             </div>
                             <div className='relvative'>
-                                <ImageLabel/>
+                                <ImageLabel label={this.props.label} url={this.props.url}/>
                             </div>
                         </div>
                     </div>
@@ -51,4 +56,11 @@ class Form extends Component {
     }
 }
 
-export default Form
+function mapStateToProps(state) {
+    return {
+        label: state.images.label,
+        url: state.images.url
+    }
+}
+
+export default connect(mapStateToProps, {postImage})(Form)

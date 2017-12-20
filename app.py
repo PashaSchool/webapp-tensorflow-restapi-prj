@@ -61,7 +61,7 @@ def get_images_by_label(label):
     return json.dumps(batch_images)
 
 
-@app.route("/upload", methods=["POST"])
+@app.route("/upload", methods=["POST", "GET"])
 def upload_image():
     img_file = request.files['img']
     print("The image file is {}".format(img_file))
@@ -98,7 +98,17 @@ def upload_image():
 
     saved_image.set_label(label)
 
-    return index(images=label)
+    recognizedImge = Database.FS.get(saved_image.fields)
+    base64_data = codecs.encode(recognizedImge.read(), 'base64')
+    image = base64_data.decode('utf-8')
+    img_str = "data:image/png;base64," + image
+
+    response = {
+        "url": img_str,
+        "label" : label
+    }
+    # return index(images=label)
+    return json.dumps(response)
 
 
 if __name__ == '__main__':

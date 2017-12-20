@@ -8,11 +8,7 @@ import reducer from './reducers'
 
 import Wrapper from './components/Wrapper'
 
-function App() {
-  return (
-        <Wrapper/>
-  )
-}
+const App = () => <Wrapper/>
 
 const store = createStore(reducer, applyMiddleware(thunk))
 

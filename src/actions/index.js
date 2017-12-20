@@ -1,4 +1,4 @@
-import {SET_HEADER, GET_IMAGES, CLEAR_IMAGES} from '../constant'
+import {SET_HEADER, GET_IMAGES, CLEAR_IMAGES, POST_IMAGE} from '../constant'
 import axios from 'axios'
 
 export const setHeader = (header) => {
@@ -27,5 +27,23 @@ export function getImages(label) {
             console.log(response)
             dispatch(reduceImages(response))
         })
+    }
+}
+
+function getResponse(response) {
+    return {
+        type: POST_IMAGE,
+        payload: response
+    }
+}
+
+export function postImage(img) {
+    return dispatch => {
+        axios.post("/upload", img)
+        .then(res => {
+            console.log(res)
+            dispatch(getResponse(res.data))
+        })
+        .catch(e => console.log("error", e))
     }
 }

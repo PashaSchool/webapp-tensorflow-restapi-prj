@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 
-import {SET_HEADER, GET_IMAGES, CLEAR_IMAGES} from '../constant'
+import {SET_HEADER, GET_IMAGES, CLEAR_IMAGES, POST_IMAGE} from '../constant'
 
 const header = (state = {}, action) => {
     switch(action.type) {
@@ -16,8 +16,8 @@ const images = (state=[], action) => {
     switch(action.type) {
         case GET_IMAGES:
             return [...action.payload]
-        case CLEAR_IMAGES:
-            return []
+        case POST_IMAGE:
+            return {url: action.payload.url, label: action.payload.label}
         default:
             return state
     }
