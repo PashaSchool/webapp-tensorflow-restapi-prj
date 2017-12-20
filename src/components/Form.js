@@ -40,11 +40,8 @@ class Form extends Component {
                         <div className='form-box'>
                             <form onSubmit={this.changeHandler} method='post' ref={n => this.form = n}>
                                 <input type='file' name='img' ref={n => this.img = n}/>
-                                <input type='submit' value='select image'/>
+                                <input type='submit' value='Predict image'/>
                             </form>
-                            <div className='load-current-imate'>
-                                <button>Load current image</button>
-                            </div>
                             <div className='relvative'>
                                 <ImageLabel label={this.props.label} url={this.props.url}/>
                             </div>
