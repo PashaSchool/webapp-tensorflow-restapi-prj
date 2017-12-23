@@ -2,7 +2,7 @@ from server.models.image import Image
 from server.database.database import Database
 from flask import Flask, render_template, request, json, jsonify
 import codecs
-import tensorflow as tf
+# import tensorflow as tf
 import numpy as np
 import os
 
@@ -64,7 +64,7 @@ def get_images_by_label(label):
 @app.route("/upload", methods=["POST", "GET"])
 def upload_image():
     img_file = request.files['img']
-    print("The image file is {}".format(img_file))
+
     content_type = img_file.content_type
     filename = img_file.filename
 
@@ -107,7 +107,6 @@ def upload_image():
         "url": img_str,
         "label" : label
     }
-    # return index(images=label)
     return json.dumps(response)
 
 
