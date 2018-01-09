@@ -8,12 +8,6 @@ export const setHeader = (header) => {
     }
 }
 
-export const clearImages = () => {
-    return {
-        type: CLEAR_IMAGES
-    }
-}
-
 const reduceImages = (images) => {
     return {
         type: GET_IMAGES,

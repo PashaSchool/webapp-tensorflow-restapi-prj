@@ -16,7 +16,6 @@ function ImageLabel({url, label}) {
     )
 }
 
-
 class Form extends Component {
     static defaultProps = {
         url: '',
@@ -24,13 +23,11 @@ class Form extends Component {
     }
     changeHandler = (e) => {
         e.preventDefault();
-        console.log('submit occur')
         let data = new FormData(this.form[0])
         data.append('img', this.img.files[0])
 
         this.props.postImage(data)
     }
-
     render() {
         console.log(this.props)
         return (
